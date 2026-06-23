@@ -35,4 +35,10 @@ fn main() {
     let r3 = &mut ss;
     r3.push_str("Broo");
     println!("{}", r3);
+
+    let mut r = String::from("ndk");
+    let p = &mut r;
+    *p = "bro".to_string();
+
+    println!("p-{}", *p)
 }
