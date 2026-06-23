@@ -1,3 +1,11 @@
+/**
+ * It has to be utils.rs and utils/
+ * modern-import/
+ *      utils/
+ *          math.rs
+ *      utils.rs
+ *      math.rs
+ */
 mod utils;
 
 use utils::math::add;
