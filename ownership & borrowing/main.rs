@@ -36,8 +36,10 @@ fn main() {
     r3.push_str("Broo");
     println!("{}", r3);
 
+    // pointer -, when changing use *, when printing , rust automatically derefeence it
     let mut r = String::from("ndk");
     let p = &mut r;
+    println!("p-{}", p)
     *p = "bro".to_string();
 
     println!("p-{}", *p)
