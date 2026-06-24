@@ -1,27 +1,41 @@
 struct User {
     name: String,
     age: u8,
+    rank: u32,
 }
 
 impl User {
-    fn get_name(&self)-> &String {
-        &self.name
+    // static method
+    fn new(name: String, age: u8, rank: u32) -> User {
+        User { name, age, rank }
     }
 
-    fn get_age(&self)-> &u8 {
-        &self.age
+    // method
+    fn get_rank(&self) {
+        println!("{}", self.rank);
+    }
+
+    // method
+    fn get_name(&self) {
+        println!("{}", self.name);
+    }
+
+    // method
+    fn get_age(&self) {
+        println!("{}", self.age);
+    }
+
+    // moves owneship
+    fn destroy(self) {
+        println!("Destroyedd");
     }
 }
 
 fn main() {
-    let u: User = User {
-        name: String::from("Ndk"),
-        age: 18,
-    };
+    let u: User = User::new(String::from("Ndk"), 12, 1);
 
-    let age = u.get_age();
-    let name = u.get_name();
-
-    println!("Name: {}", name);
-    println!("Age: {}", age);
+    u.get_rank();
+    u.get_age();
+    u.get_name();
+    u.destroy();
 }
