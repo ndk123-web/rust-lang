@@ -4,6 +4,8 @@
  * Generic Type-1 (identity)
  * Generic Type-2 (struct)
  * Generic Type-3 (multi generic)
+ *
+ * Rule: Generic + Trait = Reusable Code
  */
 
 // @type-1 generic function
