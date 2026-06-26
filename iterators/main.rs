@@ -33,7 +33,7 @@ fn main() {
     // }
     // println!("{:?}", v);
 
-    // chaining (like js)
+    // chaining/clousres (like js)
      let v = vec![1, 2, 3, 4];
 
     let new_v: Vec<i32> = v
