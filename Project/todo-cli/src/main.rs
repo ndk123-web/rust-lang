@@ -1,27 +1,65 @@
+mod storage;
 mod utils;
+
+use std::io::{self, Write};
+use storage::global_todos::TodoApp;
+use storage::storage::{append_todos, entire_save};
 use utils::todo::Todo;
 
 fn main() {
-    let mut todos: Vec<Option<Todo>> = Vec::new();
+    let mut todo_storage: TodoApp = TodoApp::new();
+    let mut dynamic_id: usize = 1;
 
-    let todo1: Option<Todo> = Some(Todo {
-        id: (1),
-        title: String::from("ndk"),
-        completed: true,
-    });
+    loop {
+        println!("======================");
+        println!("Todo APP");
+        println!("======================");
 
-    let todo2: Option<Todo> = Some(Todo {
-        id: (2),
-        title: String::from("vsh"),
-        completed: false,
-    });
+        println!();
 
-    todos.push(todo1);
-    todos.push(todo2);
+        println!("Enter a Choice");
+        println!("1. Add Todo");
+        println!("2. Show Todo");
+        println!("3. Save Todos");
 
-    // let todos: TodoApp = TodoApp::new();
+        let mut input: String = String::new();
+        io::stdin().read_line(&mut input).expect("Failed");
+        input = input.trim().to_string();
 
-    for i in todos.iter() {
-        println!("{:#?}", i.as_ref().unwrap());
+        match input.as_str() {
+            "1" => {
+                println!("> Enter Title: ");
+
+                // most important (sometimes Enter Title won't come on the screen (by flushing getting all the buffer data to on the screen))
+                io::stdout().flush().unwrap();
+
+                let mut title: String = String::new();
+                io::stdin().read_line(&mut title).expect("Failed");
+                title = title.trim().to_string();
+
+                let todo: Todo = Todo::new(dynamic_id, title, false);
+                todo_storage.add_todo(todo);
+
+                dynamic_id += 1;
+
+                println!("Succesfully Added!");
+            }
+
+            "2" => {
+                todo_storage.show_todos();
+            }
+
+            "3" => {
+                entire_save(&mut todo_storage);
+            }
+
+            "q" | "Q" => {
+                break;
+            }
+
+            _ => {
+                println!("Invalid Choice");
+            }
+        }
     }
 }

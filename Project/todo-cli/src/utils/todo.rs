@@ -7,13 +7,25 @@ pub struct Todo {
     pub completed: bool,
 }
 
-pub struct TodoApp {
-    todos: Vec<Option<Todo>>,
-}
+impl Todo {
+    pub fn new(id: usize, title: String, completed: bool) -> Todo {
+        Todo {
+            id,
+            title,
+            completed,
+        }
+    }
 
-impl TodoApp {
-    pub fn addTodo(&mut self, value: Option<Todo>) {
-        self.todos.push(value);
+    fn mark_completed(&mut self) {
+        self.completed = true;
+    }
+
+    fn mark_incomplete(&mut self) {
+        self.completed = false;
+    }
+
+    fn destroy(self) {
+        println!("destroyedd id: {}", self.id);
     }
 }
 
