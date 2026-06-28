@@ -1,6 +1,7 @@
 mod storage;
 mod utils;
 
+use std::env;
 use std::io::{self, Write};
 use storage::global_todos::TodoApp;
 use storage::storage::{append_todos, entire_save};
@@ -9,6 +10,12 @@ use utils::todo::Todo;
 fn main() {
     let mut todo_storage: TodoApp = TodoApp::new();
     let mut dynamic_id: usize = 1;
+    let args : Vec<String> = env::args().collect();
+    if (args.len() == 3) {
+        println!("{:?}", args);
+        todo_storage.show_todos();
+        return;
+    }
 
     loop {
         println!("======================");
