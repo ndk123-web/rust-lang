@@ -12,7 +12,7 @@ fn main() {
     let mut dynamic_id: usize = 1;
     let args : Vec<String> = env::args().collect();
     if (args.len() == 3) {
-        println!("{:?}", args);
+        println!("{:?}", args); 
         todo_storage.show_todos();
         return;
     }
