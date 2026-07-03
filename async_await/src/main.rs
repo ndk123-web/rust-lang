@@ -8,6 +8,7 @@
 mod tokio_spawn;
 mod arc;
 mod mutex;
+mod channels;
 
 use tokio::time::{Duration, sleep};
 
@@ -51,4 +52,7 @@ async fn main() {
 
     // Arc + Mutex 
     mutex::mutex_concept();
+
+    // Channels 
+    channels::run_channels().await;
 }
