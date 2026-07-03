@@ -14,6 +14,7 @@ async fn download() {
     println!("Download End");
 }
 
+#[allow(dead_code)]
 pub async fn tokio_spawn_fn() {
     tokio::spawn(download());
 

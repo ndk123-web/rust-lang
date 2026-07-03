@@ -3,5 +3,6 @@ name = "async_await"
 version = "0.1.0"
 edition = "2024"
 
+# Here Features means only given features modules will be compiled instead of all modules when running the project
 [dependencies]
 tokio = { version = "1", features = ["full"] }
