@@ -6,27 +6,10 @@
  * TOkio is the Runtime Engine for the ['async await']
  */
 mod tokio_spawn;
+mod arc;
+mod mutex;
 
 use tokio::time::{Duration, sleep};
-// use tokio_spawn::tokio_spawn_fn;
-
-// async fn hello() {
-//     println!("Start");
-
-//     sleep(Duration::from_secs(3)).await;
-
-//     println!("End");
-// }
-
-// #[tokio::main]
-// async fn main() {
-
-//     // @type-1 (sleep)
-//     hello().await;
-
-//     // @type-2 (spawn)
-//     tokio_spawn_fn().await;
-// }
 
 async fn download() {
     println!("Download S");
@@ -45,8 +28,8 @@ async fn main() {
     // Type 1:
     // download completes first, then upload starts.
     // upload() cannot even start until download() finishes.
-    download().await;
-    upload().await;
+    // download().await;
+    // upload().await;
 
     // Type 2:
     // Create two separate Tokio tasks.
@@ -61,4 +44,11 @@ async fn main() {
     // and the spawned tasks are cancelled.
     d.await.unwrap();
     u.await.unwrap();
+
+
+    // ARC (Atomic Reference Count)
+    arc::arc_concept();
+
+    // Arc + Mutex 
+    mutex::mutex_concept();
 }
