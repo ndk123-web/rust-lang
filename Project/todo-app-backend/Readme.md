@@ -7,4 +7,13 @@
 
 #### Flow
 
-`User -> Router -> Middleware -> Handler -> Service -> Repository`
+- `User -> Router -> Middleware -> Handler -> Service -> Repository`
+
+- Handler -> Takes Arguments/Data from request and send it to related service
+- Service -> Actual Buissness Logic
+- Repository -> Only DB Related work
+
+#### Enviroment
+
+- we used `dotenvy` crate
+- and we get using `std::env::var(key)` the value of enviromenet variable

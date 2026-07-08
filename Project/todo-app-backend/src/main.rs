@@ -1,6 +1,8 @@
+mod configs;
 mod handlers;
 mod middlewares;
 mod routes;
+mod state;
 
 use axum::{Router, routing::get};
 use routes::{auth::auth_routes, user::user_router};
@@ -10,9 +12,19 @@ use axum::middleware::from_fn;
 use middlewares::{auth::auth_middleware, logger::logger};
 use tower_http::cors::CorsLayer;
 
+use configs::config::Config;
+use state::state::AppState;
+
 #[allow(dead_code)]
 #[tokio::main]
 async fn main() {
+    // App config
+    let config = Config::load();
+    println!("{:#?}", config);
+
+    let state = AppState { config };
+    println!("{:#?}", state);
+
     // use nest to give some prefix urls to some other routers
     // layer start from end of the layer (like here first logger, then cors)
     let app = Router::new()
