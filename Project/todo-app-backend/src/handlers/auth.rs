@@ -1,4 +1,8 @@
-pub async fn login() -> &'static str {
+use crate::state::state::AppState;
+use axum::extract::State;
+
+pub async fn login(State(app_state): State<AppState>) -> &'static str {
+    println!("App State: {:#?}", app_state);
     return "Login";
 }
 

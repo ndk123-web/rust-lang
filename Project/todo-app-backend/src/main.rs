@@ -22,8 +22,9 @@ async fn main() {
     let config = Config::load();
     println!("{:#?}", config);
 
-    let state = AppState { config };
-    println!("{:#?}", state);
+    // App State
+    let app_state = AppState { config };
+    println!("{:#?}", app_state);
 
     // use nest to give some prefix urls to some other routers
     // layer start from end of the layer (like here first logger, then cors)
@@ -34,6 +35,11 @@ async fn main() {
             "/api/v1/user",
             user_router().layer(from_fn(auth_middleware)),
         )
+
+        // for this app_state Router must be of type State Appstate
+        .with_state(app_state)
+
+        
         // from_fn is for the custom middlewares
         .layer(CorsLayer::permissive())
         .layer(from_fn(logger));
