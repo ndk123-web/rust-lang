@@ -1,8 +1,13 @@
 mod configs;
+mod db;
 mod handlers;
 mod middlewares;
 mod routes;
 mod state;
+mod dto;
+mod models;
+mod repositories;
+mod services;
 
 use axum::{Router, routing::get};
 use routes::{auth::auth_routes, user::user_router};
@@ -15,15 +20,21 @@ use tower_http::cors::CorsLayer;
 use configs::config::Config;
 use state::state::AppState;
 
+use db::connection::create_pool;
+
 #[allow(dead_code)]
 #[tokio::main]
-async fn main() {
+async fn main() -> anyhow::Result<()> {
     // App config
     let config = Config::load();
     println!("{:#?}", config);
 
+    // create database Pool
+    let pool = create_pool(&config.database_url).await?;
+    println!("{:#?}", pool);
+
     // App State
-    let app_state = AppState { config };
+    let app_state = AppState { config, pool };
     println!("{:#?}", app_state);
 
     // use nest to give some prefix urls to some other routers
@@ -35,11 +46,8 @@ async fn main() {
             "/api/v1/user",
             user_router().layer(from_fn(auth_middleware)),
         )
-
         // for this app_state Router must be of type State Appstate
         .with_state(app_state)
-
-        
         // from_fn is for the custom middlewares
         .layer(CorsLayer::permissive())
         .layer(from_fn(logger));
@@ -53,6 +61,8 @@ async fn main() {
     axum::serve(tcp_listener, app)
         .await
         .expect("Not able to server by axum");
+
+    Ok(())
 }
 
 async fn hello_fn() -> String {
