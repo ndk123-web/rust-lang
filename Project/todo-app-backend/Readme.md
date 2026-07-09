@@ -259,7 +259,7 @@ Examples:
 
 * Route handlers ✅
 * Some Axum-managed callbacks/extractors ✅
-* `First it reads handler signature and then accordingly it fetch the data from http request`
+* Axum reads the handler signature first, then it takes the needed data from the HTTP request and fills the parameters.
 
 Not inside:
 
@@ -282,3 +282,47 @@ Axum is responsible for constructing and injecting extractors. If you call a fun
 * **AppState = Shared Application Resources**
 * **Extractors = Data provided by Axum**
 * **Middleware = Code executed before and/or after handlers**
+
+## Migration
+
+`sqlx-cli` is used locally to manage database migrations.
+
+Simple flow:
+
+1. Create a new migration file:
+
+    ```text
+    sqlx migrate add something
+    ```
+
+2. Run migrations:
+
+    ```text
+    sqlx migrate run
+    ```
+
+It reads `DATABASE_URL` from `.env` and runs the migration on that database.
+
+## Json Response
+
+To send JSON from Axum, use a tuple like this:
+
+```rust
+(status_code, Json(value)).into_response()
+```
+
+This is useful when you want to return both HTTP status and JSON data.
+
+## Argon and password_hash mechanism
+
+Argon2 hashes the password using a random salt and hashing parameters.
+
+Simple idea:
+
+1. User gives a plain password.
+2. Argon2 creates a hash using salt and parameters.
+3. Store only the hash in the database.
+4. When the user logs in, compare the entered password with the stored hash.
+5. If the verification succeeds, the password is correct.
+
+This is safer than storing plain text passwords.

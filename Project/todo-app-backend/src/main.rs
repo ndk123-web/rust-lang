@@ -8,6 +8,8 @@ mod dto;
 mod models;
 mod repositories;
 mod services;
+mod shared;
+mod utils;
 
 use axum::{Router, routing::get};
 use routes::{auth::auth_routes, user::user_router};
